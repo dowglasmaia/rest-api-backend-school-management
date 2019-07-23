@@ -1,12 +1,17 @@
 package org.com.maia.ge.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -14,31 +19,26 @@ import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
 @Audited
-@AuditTable(value = "audit_course")
+@AuditTable(value = "audit_Address_complement")
 @Table
 @Entity
-public class Instituicao implements Serializable {
+public class AddressComplement implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank(message = "Field name is required")
+	@NotBlank(message = "Field number is required")
 	@Column(length = 50, nullable = false)
-	private String name;
+	private String number; // numero
 
-	private String site;
+	private String complement; // complemento
 
-	@NotBlank(message = "Field telephone is required")
-	@Column(length = 16, nullable = false)
-	private String telephone;
+	private String pointOfReference; // complemento
 
-	private String cnpj;
-
-	public Instituicao() {
-		// TODO Auto-generated constructor stub
-	}
+	@OneToMany(mappedBy = "complement", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+	private List<Address> addresses = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -48,36 +48,32 @@ public class Instituicao implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNumber() {
+		return number;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
-	public String getSite() {
-		return site;
+	public String getComplement() {
+		return complement;
 	}
 
-	public void setSite(String site) {
-		this.site = site;
+	public void setComplement(String complement) {
+		this.complement = complement;
 	}
 
-	public String getTelephone() {
-		return telephone;
+	public String getPointOfReference() {
+		return pointOfReference;
 	}
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+	public void setPointOfReference(String pointOfReference) {
+		this.pointOfReference = pointOfReference;
 	}
 
-	public String getCnpj() {
-		return cnpj;
-	}
-
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
+	public List<Address> getAddresses() {
+		return addresses;
 	}
 
 	@Override
@@ -96,7 +92,7 @@ public class Instituicao implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Instituicao other = (Instituicao) obj;
+		AddressComplement other = (AddressComplement) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

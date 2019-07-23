@@ -1,20 +1,56 @@
 package org.com.maia.ge.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 /* Estado  */
 
+@Audited
+@AuditTable(value = "audit_district")
+@Table
+@Entity
 public class District implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotBlank(message = "Field name is required") // campo nome é requerido
+	@Column(length = 50, nullable = false)
 	private String name; // nome
 
+	@NotBlank(message = "field initials is required") // campo sigla é obrigatório
+	@Column(length = 2, nullable = false)
 	private String initials; // Sigla
 
+	@OneToMany(mappedBy = "district", fetch = FetchType.EAGER)
+	private List<City> cities = new ArrayList<>();
+
 	public District() {
-		// TODO Auto-generated constructor stub
+
+	}
+
+	public District(Long id, @NotBlank(message = "Field name is required") String name,
+			@NotBlank(message = "field initials is required") String initials) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.initials = initials;
 	}
 
 	public Long getId() {
@@ -39,6 +75,10 @@ public class District implements Serializable {
 
 	public void setInitials(String initials) {
 		this.initials = initials;
+	}
+
+	public List<City> getCities() {
+		return cities;
 	}
 
 	@Override

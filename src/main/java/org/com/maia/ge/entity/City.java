@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.envers.AuditTable;
@@ -30,8 +32,25 @@ public class City implements Serializable {
 	@Column(length = 50, nullable = false)
 	private String name;
 
+	@Valid
+	@ManyToOne
+	private District district;
+
+	@Valid
+	@ManyToOne
+	private Address address;
+
 	public City() {
 
+	}
+
+	public City(Long id, @NotBlank(message = "Field name is required ") String name, @Valid District district,
+			Address address) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.district = district;
+		this.address = address;
 	}
 
 	public Long getId() {
@@ -48,6 +67,22 @@ public class City implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public District getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(District district) {
+		this.district = district;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	@Override

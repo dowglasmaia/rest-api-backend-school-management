@@ -2,22 +2,49 @@ package org.com.maia.ge.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+
 /*Endereço */
 
+@Audited
+@AuditTable(value = "audit_Addres")
+@Table
+@Entity
 public class Address implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotBlank(message = "Field street is required")
+	@Column(length = 50, nullable = false)
 	private String street; // Rua / logradouro
 
-	private String number; // numero
-
-	private String complement; // complemento
-
+	@NotBlank(message = "Field district is required")
+	@Column(length = 50, nullable = false)
 	private String district; // Bairro / setor / Zona
 
+	@NotBlank(message = "Field postalCode is required")
+	@Column(length = 50, nullable = false)
 	private String postalCode; // cep / codigo postal.
+
+	@JoinColumn(nullable = false)
+	@Valid
+	@ManyToOne
+	private AddressComplement complement;
 
 	public Address() {
 
@@ -39,22 +66,6 @@ public class Address implements Serializable {
 		this.street = street;
 	}
 
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
-	public String getComplement() {
-		return complement;
-	}
-
-	public void setComplement(String complement) {
-		this.complement = complement;
-	}
-
 	public String getDistrict() {
 		return district;
 	}
@@ -69,6 +80,14 @@ public class Address implements Serializable {
 
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
+	}
+
+	public AddressComplement getComplement() {
+		return complement;
+	}
+
+	public void setComplement(AddressComplement complement) {
+		this.complement = complement;
 	}
 
 	@Override

@@ -2,22 +2,55 @@ package org.com.maia.ge.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+import org.hibernate.validator.constraints.br.CPF;
+
+@Audited
+@AuditTable(value = "audit_teacher")
+@Table
+@Entity
 public class Teacher implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotBlank(message = "Field name is required")
+	@Column(length = 50, nullable = false)
 	private String name; // nome
 
+	@NotBlank(message = "Field genero is required")
+	@Column(length = 50, nullable = false)
 	private String genero;// genero / sexo
 
+	@NotBlank(message = "Field cpf is required")
+	@CPF(message = "invalid CPF")
+	@Column(nullable = false)
 	private String cpf; // identification document
 
+	@NotBlank(message = "Field telephone is required")
+	@Column(length = 12, nullable = false)
 	private String telephone; // telefone/ celular
 
+	@NotBlank(message = "Field e-mail is required")
+	@Column(length = 50, nullable = false, unique = true)
+	@Email(message = "invalid e-mail")
 	private String email;
 
-	private String password; // senha
+	@NotBlank(message = "Field password is required")
+	@Column(length = 8, nullable = false)
+	private String password; // senha 
 
 	public Teacher() {
 		// TODO Auto-generated constructor stub
