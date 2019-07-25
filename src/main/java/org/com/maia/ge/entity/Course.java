@@ -30,6 +30,13 @@ public class Course implements Serializable {
 	@Column(length = 50, nullable = false)
 	private String name;
 	
+	//professor - lista
+	
+	//aluno - lista
+	
+	//turno - enum
+	
+	
 
 	public Course() {
 		// TODO Auto-generated constructor stub

@@ -17,7 +17,7 @@ import org.hibernate.envers.Audited;
 @AuditTable(value = "audit_course")
 @Table
 @Entity
-public class Instituicao implements Serializable {
+public class Institution implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -36,7 +36,7 @@ public class Instituicao implements Serializable {
 
 	private String cnpj;
 
-	public Instituicao() {
+	public Institution() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -96,7 +96,7 @@ public class Instituicao implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Instituicao other = (Instituicao) obj;
+		Institution other = (Institution) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
