@@ -1,4 +1,4 @@
-package org.com.maia.ge.security;
+package org.com.maia.ge.config.security;
 
 import java.util.Arrays;
 

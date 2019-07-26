@@ -1,5 +1,7 @@
 package org.com.maia.ge.controller;
 
+import java.util.List;
+
 import org.com.maia.ge.entity.District;
 import org.com.maia.ge.services.DistrictServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,12 @@ public class DistrictController {
 	public ResponseEntity<District> findById(@PathVariable Long id) {
 		District obj = services.findById(id);
 		return ResponseEntity.ok().body(obj);
+	}
+
+	@GetMapping
+	public ResponseEntity<List<District>> findAll() {
+		List<District> list = services.findAll();
+		return ResponseEntity.ok().body(list);
 	}
 
 }
