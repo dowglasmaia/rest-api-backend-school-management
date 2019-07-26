@@ -1,4 +1,4 @@
-package org.com.maia.ge.service.util;
+package org.com.maia.ge.services.util;
 
 import java.text.ParseException;
 

@@ -1,4 +1,4 @@
-package org.com.maia.ge.security;
+package org.com.maia.ge.services;
 
 import java.util.Optional;
 
@@ -20,5 +20,6 @@ public class DistrictServices {
 		Optional<District> result = repository.findById(id);
 		return result.get();
 	}
+	
 
 }
