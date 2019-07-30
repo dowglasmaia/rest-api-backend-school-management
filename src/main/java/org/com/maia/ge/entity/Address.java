@@ -46,8 +46,24 @@ public class Address implements Serializable {
 	@ManyToOne
 	private AddressComplement complement;
 
+	@ManyToOne
+	private City city;
+
 	public Address() {
 
+	}
+
+	public Address(Long id, @NotBlank(message = "Field street is required") String street,
+			@NotBlank(message = "Field district is required") String district,
+			@NotBlank(message = "Field postalCode is required") String postalCode, @Valid AddressComplement complement,
+			City city) {
+		super();
+		this.id = id;
+		this.street = street;
+		this.district = district;
+		this.postalCode = postalCode;
+		this.complement = complement;
+		this.city = city;
 	}
 
 	public Long getId() {
@@ -88,6 +104,14 @@ public class Address implements Serializable {
 
 	public void setComplement(AddressComplement complement) {
 		this.complement = complement;
+	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
 	}
 
 	@Override
