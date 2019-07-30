@@ -39,7 +39,6 @@ public class CityServices {
 	// From DTO City
 	public City fromDTO(NewCityDTO objDT) {
 		District district = objDT.getDistrict();
-
 		City city = new City(null, objDT.getName(), district);
 
 		return city;
