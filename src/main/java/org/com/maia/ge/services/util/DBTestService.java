@@ -5,9 +5,13 @@ import java.text.ParseException;
 import org.com.maia.ge.entity.Address;
 import org.com.maia.ge.entity.City;
 import org.com.maia.ge.entity.District;
+import org.com.maia.ge.entity.Institution;
+import org.com.maia.ge.entity.Room;
 import org.com.maia.ge.repository.AddressRepository;
 import org.com.maia.ge.repository.CityRepository;
 import org.com.maia.ge.repository.DistrictRepository;
+import org.com.maia.ge.repository.InstitutionRepository;
+import org.com.maia.ge.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +26,12 @@ public class DBTestService {
 
 	@Autowired
 	private AddressRepository addressRepo;
+
+	@Autowired
+	private InstitutionRepository institutionRepo;
+
+	@Autowired
+	private RoomRepository roomRepo;
 
 	public void instanciateTestDatabase() throws ParseException {
 
@@ -71,8 +81,18 @@ public class DBTestService {
 		// ***************** END - CITY *******************
 
 		Address a1 = new Address(null, "Av. C", "Centro", "74.658", "10-AB", "Qd.14 ,Lt -10", null, city);
-
 		addressRepo.save(a1);
+
+		Address a2 = new Address(null, "Av. C", "Centro", "74.658", "10-AB", "Qd.14 ,Lt -10", null, city7);
+		addressRepo.save(a2);
+
+		// ************
+
+		Institution school_1 = new Institution(null, "Maia Institution", "maia.org.edu", "000-9999-7777", null, a1);
+		Room room = new Room(null, "Sala-B2", "01ª Piso", school_1);
+		school_1.getRooms().add(room);
+		institutionRepo.save(school_1);
+		roomRepo.save(room);
 
 	}
 

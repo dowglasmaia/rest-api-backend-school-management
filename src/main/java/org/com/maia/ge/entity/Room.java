@@ -7,11 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /* Sala */
 
@@ -30,11 +33,27 @@ public class Room implements Serializable {
 	@Column(length = 50, nullable = false)
 	private String description;
 
+	@NotBlank(message = "Field floor is required")
+	@Column(length = 50, nullable = false)
+	private String floor; // Andar / piso / solo ...
+
+	@JsonIgnore
+	@ManyToOne
+	private Institution institution;
+
 	public Room() {
 		// TODO Auto-generated constructor stub
 	}
 
-	
+	public Room(Long id, @NotBlank(message = "Field description is required") String description, String floor,
+			Institution institution) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.floor = floor;
+		this.institution = institution;
+	}
+
 	/* == GETTERS E SETTERS == */
 	public Long getId() {
 		return id;
@@ -50,6 +69,22 @@ public class Room implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getFloor() {
+		return floor;
+	}
+
+	public void setFloor(String floor) {
+		this.floor = floor;
+	}
+
+	public Institution getInstitution() {
+		return institution;
+	}
+
+	public void setInstitution(Institution institution) {
+		this.institution = institution;
 	}
 
 	@Override
