@@ -42,6 +42,8 @@ public class Course implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	/* == GETTERS E SETTERS == */
 	public Long getId() {
 		return id;
 	}

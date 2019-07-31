@@ -1,16 +1,19 @@
 package org.com.maia.ge.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.envers.AuditTable;
@@ -41,10 +44,13 @@ public class Address implements Serializable {
 	@Column(length = 50, nullable = false)
 	private String postalCode; // cep / codigo postal.
 
-	@JoinColumn(nullable = false)
-	@Valid
-	@ManyToOne
-	private AddressComplement complement;
+	@NotBlank(message = "Field number is required")
+	@Column(length = 50, nullable = false)
+	private String number; // numero
+
+	private String complement; // complemento
+
+	private String pointOfReference; // complemento
 
 	@ManyToOne
 	private City city;
@@ -55,17 +61,21 @@ public class Address implements Serializable {
 
 	public Address(Long id, @NotBlank(message = "Field street is required") String street,
 			@NotBlank(message = "Field district is required") String district,
-			@NotBlank(message = "Field postalCode is required") String postalCode, @Valid AddressComplement complement,
+			@NotBlank(message = "Field postalCode is required") String postalCode,
+			@NotBlank(message = "Field number is required") String number, String complement, String pointOfReference,
 			City city) {
 		super();
 		this.id = id;
 		this.street = street;
 		this.district = district;
 		this.postalCode = postalCode;
+		this.number = number;
 		this.complement = complement;
+		this.pointOfReference = pointOfReference;
 		this.city = city;
 	}
 
+	/* == GETTERS E SETTERS == */
 	public Long getId() {
 		return id;
 	}
@@ -98,12 +108,28 @@ public class Address implements Serializable {
 		this.postalCode = postalCode;
 	}
 
-	public AddressComplement getComplement() {
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	public String getComplement() {
 		return complement;
 	}
 
-	public void setComplement(AddressComplement complement) {
+	public void setComplement(String complement) {
 		this.complement = complement;
+	}
+
+	public String getPointOfReference() {
+		return pointOfReference;
+	}
+
+	public void setPointOfReference(String pointOfReference) {
+		this.pointOfReference = pointOfReference;
 	}
 
 	public City getCity() {

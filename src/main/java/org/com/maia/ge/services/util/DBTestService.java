@@ -2,8 +2,10 @@ package org.com.maia.ge.services.util;
 
 import java.text.ParseException;
 
+import org.com.maia.ge.entity.Address;
 import org.com.maia.ge.entity.City;
 import org.com.maia.ge.entity.District;
+import org.com.maia.ge.repository.AddressRepository;
 import org.com.maia.ge.repository.CityRepository;
 import org.com.maia.ge.repository.DistrictRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class DBTestService {
 
 	@Autowired
 	private CityRepository cityRespo;
+
+	@Autowired
+	private AddressRepository addressRepo;
 
 	public void instanciateTestDatabase() throws ParseException {
 
@@ -62,6 +67,12 @@ public class DBTestService {
 
 		City city11 = new City(null, "Catedral", d2);
 		cityRespo.save(city11);
+
+		// ***************** END - CITY *******************
+
+		Address a1 = new Address(null, "Av. C", "Centro", "74.658", "10-AB", "Qd.14 ,Lt -10", null, city);
+
+		addressRepo.save(a1);
 
 	}
 

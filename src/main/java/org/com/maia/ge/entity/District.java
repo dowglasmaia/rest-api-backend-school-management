@@ -17,8 +17,6 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /* Estado  */
 
 @Audited
@@ -40,7 +38,6 @@ public class District implements Serializable {
 	@Column(length = 2, nullable = false)
 	private String initials; // Sigla
 
-	
 	@OneToMany(mappedBy = "district", fetch = FetchType.EAGER)
 	private List<City> cities = new ArrayList<>();
 
@@ -56,6 +53,7 @@ public class District implements Serializable {
 		this.initials = initials;
 	}
 
+	/* == GETTERS E SETTERS == */
 	public Long getId() {
 		return id;
 	}
