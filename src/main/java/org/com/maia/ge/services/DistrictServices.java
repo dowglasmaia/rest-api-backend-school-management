@@ -23,7 +23,7 @@ public class DistrictServices {
 	// find all
 	public List<District> findAll() {
 		return repository.findAll();
-
 	}
+	
 
 }

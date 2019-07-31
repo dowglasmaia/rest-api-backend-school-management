@@ -37,7 +37,7 @@ public class City implements Serializable {
 	@Column(length = 50, nullable = false)
 	private String name;
 
-	@JsonIgnore
+	
 	@Valid
 	@ManyToOne
 	private District district;
