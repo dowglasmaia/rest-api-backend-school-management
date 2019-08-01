@@ -89,10 +89,28 @@ public class DBTestService {
 		// ************
 
 		Institution school_1 = new Institution(null, "Maia Institution", "maia.org.edu", "000-9999-7777", null, a1);
+
 		Room room = new Room(null, "Sala-B2", "01ª Piso", school_1);
+		Room room1 = new Room(null, "Sala-B3", "01ª Piso", school_1);
+		Room room2 = new Room(null, "Sala-B4", "01ª Piso", school_1);
+		Room room3 = new Room(null, "Sala-B5", "02ª Piso", school_1);
+		Room room4 = new Room(null, "Sala-B6", "02ª Piso", school_1);
+
 		school_1.getRooms().add(room);
+		school_1.getRooms().add(room1);
+		school_1.getRooms().add(room2);
+		school_1.getRooms().add(room3);
+		school_1.getRooms().add(room4);
+
 		institutionRepo.save(school_1);
+
 		roomRepo.save(room);
+		roomRepo.save(room1);
+		roomRepo.save(room2);
+		roomRepo.save(room3);
+		roomRepo.save(room4);
+
+		// ***************** END *******************
 
 	}
 

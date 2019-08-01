@@ -16,7 +16,8 @@ public class InstitutionNewDTO {
 	private String cnpj;
 
 	private Address address;
-
+	
+	
 	public InstitutionNewDTO() {
 		// TODO Auto-generated constructor stub
 	}
@@ -29,6 +30,7 @@ public class InstitutionNewDTO {
 		this.telephone = obj.getTelephone();
 		this.cnpj = obj.getCnpj();
 		this.address = obj.getAddress();
+		
 	}
 
 	public Long getId() {

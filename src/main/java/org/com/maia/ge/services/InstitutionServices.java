@@ -7,6 +7,7 @@ import org.com.maia.ge.entity.Address;
 import org.com.maia.ge.entity.Institution;
 import org.com.maia.ge.entity.dto.institution.InstitutionNewDTO;
 import org.com.maia.ge.repository.InstitutionRepository;
+import org.com.maia.ge.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,9 @@ public class InstitutionServices {
 
 	@Autowired
 	private InstitutionRepository repository;
+
+	@Autowired
+	private RoomRepository roomRepo;
 
 	// find by id
 	public Institution findById(Long id) {
@@ -58,7 +62,7 @@ public class InstitutionServices {
 		repository.deleteById(id);
 	}
 
-	//BUSCAR PELO CNPJ
-	
-	//BSUCAR PELA CIDADE
+	// BUSCAR PELO CNPJ
+
+	// BSUCAR PELA CIDADE
 }
