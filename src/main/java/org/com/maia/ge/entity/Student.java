@@ -2,15 +2,15 @@ package org.com.maia.ge.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -74,15 +74,21 @@ public class Student implements Serializable {
 	@NotBlank(message = "Field telephone is required")
 	@Column(length = 12, nullable = false)
 	private String telephone; // telefone
+
+	@NotBlank(message = "Field school level is required")	
+	private String schoolLevel; // nivel escolar
+
+	@NotBlank(message = "Field schedule is required")	
+	private String schedule; // turno / horario
 	
-	
+	@ManyToOne
+	private SchoolGrade schoolGrade;
 
 	// constructor
 	public Student() {
 
 	}
 
-	
 	/* == GETTERS E SETTERS == */
 	public Long getId() {
 		return id;
@@ -178,6 +184,22 @@ public class Student implements Serializable {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+
+	public String getSchoolLevel() {
+		return schoolLevel;
+	}
+
+	public void setSchoolLevel(String schoolLevel) {
+		this.schoolLevel = schoolLevel;
+	}
+
+	public String getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(String schedule) {
+		this.schedule = schedule;
 	}
 
 	@Override

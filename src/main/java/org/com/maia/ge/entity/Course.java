@@ -1,17 +1,15 @@
 package org.com.maia.ge.entity;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -34,6 +32,9 @@ public class Course implements Serializable {
 	@NotBlank(message = " Field  name is required")
 	@Column(length = 50, nullable = false)
 	private String name;
+
+	@ManyToMany(mappedBy = "courses")
+	private List<SchoolGrade> grades = new ArrayList<>();
 
 	/*
 	 * @OneToOne(mappedBy = "course", cascade = CascadeType.ALL, fetch =
@@ -67,6 +68,10 @@ public class Course implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<SchoolGrade> getGrades() {
+		return grades;
 	}
 	/*
 	 * public Set<Teacher> getTeachers() { return teachers; }
