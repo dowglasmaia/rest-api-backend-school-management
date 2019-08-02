@@ -4,11 +4,13 @@ import java.text.ParseException;
 
 import org.com.maia.ge.entity.Address;
 import org.com.maia.ge.entity.City;
+import org.com.maia.ge.entity.Course;
 import org.com.maia.ge.entity.District;
 import org.com.maia.ge.entity.Institution;
 import org.com.maia.ge.entity.Room;
 import org.com.maia.ge.repository.AddressRepository;
 import org.com.maia.ge.repository.CityRepository;
+import org.com.maia.ge.repository.CourseRepository;
 import org.com.maia.ge.repository.DistrictRepository;
 import org.com.maia.ge.repository.InstitutionRepository;
 import org.com.maia.ge.repository.RoomRepository;
@@ -32,6 +34,9 @@ public class DBTestService {
 
 	@Autowired
 	private RoomRepository roomRepo;
+	
+	@Autowired
+	private CourseRepository courseRepo;
 
 	public void instanciateTestDatabase() throws ParseException {
 
@@ -112,6 +117,17 @@ public class DBTestService {
 
 		// ***************** END *******************
 
+		Course c1 = new Course(null, "Analise e Desenvolvimento de Sistemas");
+		Course c2 = new Course(null, "Matemática Aplicada");
+		Course c3 = new Course(null, "Banco de Dados");
+		
+		courseRepo.save(c1);
+		courseRepo.save(c2);
+		courseRepo.save(c3);
+		
+		
+		
+		
 	}
 
 }

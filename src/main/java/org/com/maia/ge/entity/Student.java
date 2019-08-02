@@ -2,12 +2,15 @@ package org.com.maia.ge.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -71,6 +74,8 @@ public class Student implements Serializable {
 	@NotBlank(message = "Field telephone is required")
 	@Column(length = 12, nullable = false)
 	private String telephone; // telefone
+	
+	
 
 	// constructor
 	public Student() {
