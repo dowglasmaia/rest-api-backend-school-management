@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.com.maia.ge.entity.Address;
 import org.com.maia.ge.entity.Institution;
+import org.com.maia.ge.entity.Room;
 import org.com.maia.ge.entity.dto.institution.InstitutionNewDTO;
 import org.com.maia.ge.repository.InstitutionRepository;
 import org.com.maia.ge.repository.RoomRepository;
@@ -34,9 +35,9 @@ public class InstitutionServices {
 
 	// save
 	public Institution save(Institution obj) {
-		obj.setId(null);
-		Institution newObj = repository.save(obj);
-		return newObj;
+		obj.setId(null);	
+
+		return repository.save(obj);
 
 	}
 
@@ -65,4 +66,6 @@ public class InstitutionServices {
 	// BUSCAR PELO CNPJ
 
 	// BSUCAR PELA CIDADE
+
+	
 }
