@@ -2,13 +2,17 @@ package org.com.maia.ge.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -36,13 +40,10 @@ public class Course implements Serializable {
 	@ManyToMany(mappedBy = "courses")
 	private List<SchoolGrade> grades = new ArrayList<>();
 
-	/*
-	 * @OneToOne(mappedBy = "course", cascade = CascadeType.ALL, fetch =
-	 * FetchType.EAGER) private Set<Teacher> teachers = new HashSet<>();
-	 * 
-	 * @OneToOne(mappedBy = "course", cascade = CascadeType.ALL, fetch =
-	 * FetchType.EAGER) private Set<Student> students = new HashSet<>();
-	 */
+	@ManyToMany
+	@JoinTable(name = "Student_Course", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+	private Set<Student> students = new HashSet<>();
+
 	public Course() {
 		// TODO Auto-generated constructor stub
 	}
@@ -73,11 +74,10 @@ public class Course implements Serializable {
 	public List<SchoolGrade> getGrades() {
 		return grades;
 	}
-	/*
-	 * public Set<Teacher> getTeachers() { return teachers; }
-	 * 
-	 * public Set<Student> getStudents() { return students; }
-	 */
+
+	public void setStudents(Set<Student> students) {
+		this.students = students;
+	}
 
 	@Override
 	public int hashCode() {

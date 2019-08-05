@@ -2,16 +2,20 @@ package org.com.maia.ge.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -75,18 +79,65 @@ public class Student implements Serializable {
 	@Column(length = 12, nullable = false)
 	private String telephone; // telefone
 
-	@NotBlank(message = "Field school level is required")	
+	@NotBlank(message = "Field school level is required")
 	private String schoolLevel; // nivel escolar
 
-	@NotBlank(message = "Field schedule is required")	
+	@NotBlank(message = "Field schedule is required")
 	private String schedule; // turno / horario
-	
+
+	@Valid
 	@ManyToOne
-	private SchoolGrade schoolGrade;
+	private SchoolGrade schoolGrade; // serie escolar
+
+	@ManyToMany(mappedBy = "students")
+	private Set<Course> courses = new HashSet<>(); // materias
+
+	@ManyToMany
+	@JoinTable(name = "Teacher_Student", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
+	private Set<Teacher> teachers = new HashSet<>(); // professores
+
+	@Valid
+	@ManyToOne
+	private Institution institution; // escola
+
+	@Valid
+	@ManyToOne
+	private Address address; // endereço
 
 	// constructor
 	public Student() {
 
+	}
+
+	public Student(Long id, @NotBlank(message = "Field name is required") String name, String genero,
+			@NotBlank(message = "Field cpf is required") @CPF(message = "invalid CPF") String cpf,
+			@NotBlank(message = "Field Date of Birth is required") LocalDate dateOfBirth,
+			@NotBlank(message = "Field Date of Enrollment is required") LocalDate dateOfEnrollment,
+			LocalDate transferDate, LocalDate dateOfDeparture, String responsible,
+			@NotBlank(message = "Field e-mail is required") @Email(message = "invalid e-mail") String email,
+			@NotBlank(message = "Field password is required") String password,
+			@NotBlank(message = "Field telephone is required") String telephone,
+			@NotBlank(message = "Field school level is required") String schoolLevel,
+			@NotBlank(message = "Field schedule is required") String schedule, @Valid SchoolGrade schoolGrade,
+			@Valid Institution institution, @Valid Address address) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.genero = genero;
+		this.cpf = cpf;
+		this.dateOfBirth = dateOfBirth;
+		this.dateOfEnrollment = dateOfEnrollment;
+		this.transferDate = transferDate;
+		this.dateOfDeparture = dateOfDeparture;
+		this.responsible = responsible;
+		this.email = email;
+		this.password = password;
+		this.telephone = telephone;
+		this.schoolLevel = schoolLevel;
+		this.schedule = schedule;
+		this.schoolGrade = schoolGrade;
+		this.institution = institution;
+		this.address = address;
 	}
 
 	/* == GETTERS E SETTERS == */
@@ -202,12 +253,48 @@ public class Student implements Serializable {
 		this.schedule = schedule;
 	}
 
+	public Institution getInstitution() {
+		return institution;
+	}
+
+	public void setInstitution(Institution institution) {
+		this.institution = institution;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public Set<Course> getCourses() {
+		return courses;
+	}
+
+	public Set<Teacher> getTeachers() {
+		return teachers;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
+	}
+
+	public SchoolGrade getSchoolGrade() {
+		return schoolGrade;
+	}
+
+	public void setSchoolGrade(SchoolGrade schoolGrade) {
+		this.schoolGrade = schoolGrade;
+	}
+
+	public void setCourses(Set<Course> courses) {
+		this.courses = courses;
 	}
 
 	@Override

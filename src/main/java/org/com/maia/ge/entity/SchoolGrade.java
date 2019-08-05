@@ -13,8 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -50,11 +52,15 @@ public class SchoolGrade implements Serializable {
 	@Column(nullable = false)
 	private Integer currentStudent;
 
+	@Valid
+	@ManyToOne
+	private Room room;
+
 	@ManyToMany // muitos pra muitos - uma Seria tem varias disciplinas
-	@JoinTable(name = "Grade_Course", joinColumns = @JoinColumn(name = "school_grade_id"), inverseJoinColumns = @JoinColumn(name = "course_id")) 
+	@JoinTable(name = "Grade_Course", joinColumns = @JoinColumn(name = "school_grade_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private Set<Course> courses = new HashSet<>(); // materias
 
-	//private Set<Teacher> teachers = new HashSet<>(); // professores
+	// private Set<Teacher> teachers = new HashSet<>(); // professores
 
 	@OneToMany(mappedBy = "schoolGrade", fetch = FetchType.LAZY)
 	private Set<Student> students = new HashSet<>(); // Alunos
@@ -63,13 +69,14 @@ public class SchoolGrade implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public SchoolGrade(Long id, String grade, String clasS, Integer maxStudent, Integer currentStudent) {
+	public SchoolGrade(Long id, String grade, String clasS, Integer maxStudent, Integer currentStudent, Room room) {
 		super();
 		this.id = id;
 		this.grade = grade;
 		this.clasS = clasS;
 		this.maxStudent = maxStudent;
 		this.currentStudent = currentStudent;
+		this.room = room;
 	}
 
 	/* vagas disponiveis */
@@ -125,6 +132,14 @@ public class SchoolGrade implements Serializable {
 //	public Set<Teacher> getTeachers() {
 //		return teachers;
 //	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
+	}
 
 	public Set<Student> getStudents() {
 		return students;

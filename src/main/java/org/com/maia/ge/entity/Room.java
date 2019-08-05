@@ -1,13 +1,17 @@
 package org.com.maia.ge.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -40,6 +44,9 @@ public class Room implements Serializable {
 	@JsonIgnore
 	@ManyToOne
 	private Institution institution;
+
+	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+	private Set<SchoolGrade> grades = new HashSet<>();
 
 	public Room() {
 		// TODO Auto-generated constructor stub
@@ -85,6 +92,10 @@ public class Room implements Serializable {
 
 	public void setInstitution(Institution institution) {
 		this.institution = institution;
+	}
+
+	public Set<SchoolGrade> getGrades() {
+		return grades;
 	}
 
 	@Override

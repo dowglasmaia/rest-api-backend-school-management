@@ -2,11 +2,14 @@ package org.com.maia.ge.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,8 +52,11 @@ public class Institution implements Serializable {
 	@OneToMany(mappedBy = "institution", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Room> rooms = new ArrayList<>();
 
+	@OneToMany(mappedBy = "institution", fetch = FetchType.EAGER)
+	private Set<Student> students = new HashSet<>();
+
 	public Institution() {
-}
+	}
 
 	public Institution(Long id, @NotBlank(message = "Field name is required") String name, String site,
 			@NotBlank(message = "Field telephone is required") String telephone, String cnpj, @Valid Address address) {

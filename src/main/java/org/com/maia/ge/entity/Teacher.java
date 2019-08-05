@@ -1,12 +1,15 @@
 package org.com.maia.ge.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -46,11 +49,14 @@ public class Teacher implements Serializable {
 	@NotBlank(message = "Field e-mail is required")
 	@Column(length = 50, nullable = false, unique = true)
 	@Email(message = "invalid e-mail")
-	private String email;
+	private String email; //email
 
 	@NotBlank(message = "Field password is required")
 	@Column(length = 8, nullable = false)
 	private String password; // senha 
+	
+	@ManyToMany(mappedBy= "teachers")
+	private Set<Student>students = new HashSet<>();
 
 	public Teacher() {
 		// TODO Auto-generated constructor stub

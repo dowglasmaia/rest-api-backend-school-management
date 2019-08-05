@@ -1,13 +1,11 @@
 package org.com.maia.ge.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,6 +52,9 @@ public class Address implements Serializable {
 
 	@ManyToOne
 	private City city;
+
+	@OneToMany(mappedBy = "address")
+	private Set<Student> students = new HashSet<>();
 
 	public Address() {
 
@@ -138,6 +139,10 @@ public class Address implements Serializable {
 
 	public void setCity(City city) {
 		this.city = city;
+	}
+
+	public Set<Student> getStudents() {
+		return students;
 	}
 
 	@Override

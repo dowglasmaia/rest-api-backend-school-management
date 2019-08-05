@@ -143,28 +143,27 @@ public class DBTestService {
 		courses.add(c4);
 		
 		//School Grade - 
-		SchoolGrade sg1 =  new SchoolGrade(null, "8ª", "A", 20, 20);
-		SchoolGrade sg2 =  new SchoolGrade(null, "8ª", "B", 20, 20);
-		SchoolGrade sg3 =  new SchoolGrade(null, "6ª", "C", 20, 20);
-		SchoolGrade sg4 =  new SchoolGrade(null, "5ª", "D", 20, 20);
+		SchoolGrade sg1 =  new SchoolGrade(null, "8ª", "A", 20, 20, room);
+		SchoolGrade sg2 =  new SchoolGrade(null, "8ª", "B", 20, 20, room);
+		SchoolGrade sg3 =  new SchoolGrade(null, "6ª", "C", 20, 20, room);
+		SchoolGrade sg4 =  new SchoolGrade(null, "5ª", "D", 20, 20, room1);
 		sg1.getCourses().add(c1);
 		sg1.getCourses().add(c2);
 		sg1.getCourses().add(c3);
 		sg4.getCourses().add(c1);
+		
+		room.getGrades().add(sg1);
+		room.getGrades().add(sg2);
+		room.getGrades().add(sg3);
+		room1.getGrades().add(sg4);
+		
 		
 		gradeRepo.save(sg1);
 		gradeRepo.save(sg2);
 		gradeRepo.save(sg3);
 		gradeRepo.save(sg4);
 		
-		//lista de Series - para a Disciplina C4
-		/*Set<SchoolGrade>grades = new HashSet<>();
-		grades.add(sg1);
-		grades.add(sg2);
-		
-		c4.getGrades().addAll(grades);
-		
-		*/
+	
 		
 	}
 
