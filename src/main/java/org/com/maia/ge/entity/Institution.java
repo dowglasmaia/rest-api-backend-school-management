@@ -22,6 +22,8 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Audited
 @AuditTable(value = "audit_course")
 @Table

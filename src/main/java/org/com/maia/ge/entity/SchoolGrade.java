@@ -23,6 +23,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /*Serie Escolar */
 
 @Audited
@@ -62,6 +64,7 @@ public class SchoolGrade implements Serializable {
 
 	// private Set<Teacher> teachers = new HashSet<>(); // professores
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "schoolGrade", fetch = FetchType.LAZY)
 	private Set<Student> students = new HashSet<>(); // Alunos
 

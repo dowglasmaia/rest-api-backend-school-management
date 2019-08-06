@@ -11,12 +11,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.br.CPF;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Audited
 @AuditTable(value = "audit_teacher")
@@ -49,19 +52,22 @@ public class Teacher implements Serializable {
 	@NotBlank(message = "Field e-mail is required")
 	@Column(length = 50, nullable = false, unique = true)
 	@Email(message = "invalid e-mail")
-	private String email; //email
+	private String email; // email
 
 	@NotBlank(message = "Field password is required")
 	@Column(length = 8, nullable = false)
-	private String password; // senha 
-	
-	@ManyToMany(mappedBy= "teachers")
-	private Set<Student>students = new HashSet<>();
+	private String password; // senha
+
+	@JsonIgnore
+	@ManyToMany(mappedBy = "teachers")
+	private Set<Student> students = new HashSet<>();
+
+	@Transient
+	private String token;
 
 	public Teacher() {
 		// TODO Auto-generated constructor stub
 	}
-	
 
 	/* == GETTERS E SETTERS == */
 	public Long getId() {
@@ -118,6 +124,18 @@ public class Teacher implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public Set<Student> getStudents() {
+		return students;
 	}
 
 	@Override

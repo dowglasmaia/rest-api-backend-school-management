@@ -45,6 +45,7 @@ public class Room implements Serializable {
 	@ManyToOne
 	private Institution institution;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
 	private Set<SchoolGrade> grades = new HashSet<>();
 

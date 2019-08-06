@@ -20,6 +20,8 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /* == Disciplina  ==*/
 
 @Audited
@@ -37,9 +39,11 @@ public class Course implements Serializable {
 	@Column(length = 50, nullable = false)
 	private String name;
 
+	@JsonIgnore
 	@ManyToMany(mappedBy = "courses")
 	private List<SchoolGrade> grades = new ArrayList<>();
 
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "Student_Course", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private Set<Student> students = new HashSet<>();

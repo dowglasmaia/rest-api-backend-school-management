@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,15 +17,21 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+import org.com.maia.ge.entity.enums.Genero;
+import org.com.maia.ge.entity.enums.LevelEducation;
+import org.com.maia.ge.entity.enums.Schedule;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Audited
 @AuditTable(value = "audit_student")
@@ -40,19 +48,20 @@ public class Student implements Serializable {
 	@Column(length = 50, nullable = false)
 	private String name; // nome
 
-	private String genero; // sexo
+	@Enumerated(EnumType.STRING)
+	private Genero genero; // sexo
 
 	@NotBlank(message = "Field cpf is required")
 	@Column(length = 11, nullable = false, unique = true)
 	@CPF(message = "invalid CPF")
 	private String cpf; // identification document
 
-	@NotBlank(message = "Field Date of Birth is required")
+	@NotNull(message = "Field Date of Birth is required")
 	@Column(nullable = false)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dateOfBirth; // data de nascimento
 
-	@NotBlank(message = "Field Date of Enrollment is required")
+	@NotNull(message = "Field Date of Enrollment is required")
 	@Column(nullable = false)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dateOfEnrollment; // data de matricula
@@ -75,31 +84,41 @@ public class Student implements Serializable {
 	@Column(length = 8, nullable = false)
 	private String password; // senha
 
+	@Transient
+	private String token;
+
 	@NotBlank(message = "Field telephone is required")
 	@Column(length = 12, nullable = false)
 	private String telephone; // telefone
 
-	@NotBlank(message = "Field school level is required")
-	private String schoolLevel; // nivel escolar
+	@NotNull(message = "Field school level is required")
+	@Enumerated(EnumType.STRING)
+	private LevelEducation schoolLevel; // nivel escolar
 
-	@NotBlank(message = "Field schedule is required")
-	private String schedule; // turno / horario
+	
+	@NotNull(message = "Field schedule is required")
+	@Enumerated(EnumType.STRING)
+	private Schedule schedule; // turno / horario
 
+	
 	@Valid
 	@ManyToOne
 	private SchoolGrade schoolGrade; // serie escolar
 
+	@JsonIgnore
 	@ManyToMany(mappedBy = "students")
 	private Set<Course> courses = new HashSet<>(); // materias
-
+	
 	@ManyToMany
 	@JoinTable(name = "Teacher_Student", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
 	private Set<Teacher> teachers = new HashSet<>(); // professores
 
+	@JsonIgnore
 	@Valid
 	@ManyToOne
 	private Institution institution; // escola
 
+		
 	@Valid
 	@ManyToOne
 	private Address address; // endereço
@@ -109,17 +128,10 @@ public class Student implements Serializable {
 
 	}
 
-	public Student(Long id, @NotBlank(message = "Field name is required") String name, String genero,
-			@NotBlank(message = "Field cpf is required") @CPF(message = "invalid CPF") String cpf,
-			@NotBlank(message = "Field Date of Birth is required") LocalDate dateOfBirth,
-			@NotBlank(message = "Field Date of Enrollment is required") LocalDate dateOfEnrollment,
-			LocalDate transferDate, LocalDate dateOfDeparture, String responsible,
-			@NotBlank(message = "Field e-mail is required") @Email(message = "invalid e-mail") String email,
-			@NotBlank(message = "Field password is required") String password,
-			@NotBlank(message = "Field telephone is required") String telephone,
-			@NotBlank(message = "Field school level is required") String schoolLevel,
-			@NotBlank(message = "Field schedule is required") String schedule, @Valid SchoolGrade schoolGrade,
-			@Valid Institution institution, @Valid Address address) {
+	public Student(Long id, String name, Genero genero, String cpf, LocalDate dateOfBirth, LocalDate dateOfEnrollment,
+			LocalDate transferDate, LocalDate dateOfDeparture, String responsible, String email, String password,
+			String telephone, LevelEducation schoolLevel, Schedule schedule, SchoolGrade schoolGrade,
+			Institution institution, Address address) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -165,11 +177,11 @@ public class Student implements Serializable {
 		this.name = name;
 	}
 
-	public String getGenero() {
+	public Genero getGenero() {
 		return genero;
 	}
 
-	public void setGenero(String genero) {
+	public void setGenero(Genero genero) {
 		this.genero = genero;
 	}
 
@@ -237,19 +249,19 @@ public class Student implements Serializable {
 		this.telephone = telephone;
 	}
 
-	public String getSchoolLevel() {
+	public LevelEducation getSchoolLevel() {
 		return schoolLevel;
 	}
 
-	public void setSchoolLevel(String schoolLevel) {
+	public void setSchoolLevel(LevelEducation schoolLevel) {
 		this.schoolLevel = schoolLevel;
 	}
 
-	public String getSchedule() {
+	public Schedule getSchedule() {
 		return schedule;
 	}
 
-	public void setSchedule(String schedule) {
+	public void setSchedule(Schedule schedule) {
 		this.schedule = schedule;
 	}
 
@@ -275,6 +287,14 @@ public class Student implements Serializable {
 
 	public Set<Teacher> getTeachers() {
 		return teachers;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	@Override

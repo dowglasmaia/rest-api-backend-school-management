@@ -17,6 +17,8 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /*Endereço */
 
 @Audited
@@ -53,6 +55,7 @@ public class Address implements Serializable {
 	@ManyToOne
 	private City city;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "address")
 	private Set<Student> students = new HashSet<>();
 
