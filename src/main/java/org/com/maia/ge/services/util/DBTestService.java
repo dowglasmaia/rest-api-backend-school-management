@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.EnumType;
+
 import org.com.maia.ge.entity.Address;
 import org.com.maia.ge.entity.City;
 import org.com.maia.ge.entity.Course;
@@ -15,9 +17,11 @@ import org.com.maia.ge.entity.Room;
 import org.com.maia.ge.entity.SchoolGrade;
 import org.com.maia.ge.entity.SchoolQuarter;
 import org.com.maia.ge.entity.Student;
+import org.com.maia.ge.entity.StudentNote;
 import org.com.maia.ge.entity.enums.Genero;
 import org.com.maia.ge.entity.enums.LevelEducation;
 import org.com.maia.ge.entity.enums.Schedule;
+import org.com.maia.ge.entity.enums.Semester;
 import org.com.maia.ge.repository.AddressRepository;
 import org.com.maia.ge.repository.CityRepository;
 import org.com.maia.ge.repository.CourseRepository;
@@ -25,6 +29,7 @@ import org.com.maia.ge.repository.DistrictRepository;
 import org.com.maia.ge.repository.InstitutionRepository;
 import org.com.maia.ge.repository.RoomRepository;
 import org.com.maia.ge.repository.SchoolGradeRepository;
+import org.com.maia.ge.repository.SchoolQuarterRepository;
 import org.com.maia.ge.repository.StudentNoteRepository;
 import org.com.maia.ge.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,13 +61,12 @@ public class DBTestService {
 
 	@Autowired
 	private StudentRepository studentRepo;
-	
+
 	@Autowired
 	private StudentNoteRepository noteRepository;
-	
+
 	@Autowired
-	private SchoolQuarter quarter;
-	
+	private SchoolQuarterRepository quarterRepo;
 
 	public void instanciateTestDatabase() throws ParseException {
 
@@ -143,6 +147,19 @@ public class DBTestService {
 
 		// ***************** END *******************
 
+		// =-=====SEMESTRE ========//
+		SchoolQuarter quarter = new SchoolQuarter(null, Semester.FIRST);
+		quarterRepo.save(quarter);
+
+		SchoolQuarter quarter2 = new SchoolQuarter(null, Semester.SECOND);
+		quarterRepo.save(quarter2);
+
+		SchoolQuarter quarter3 = new SchoolQuarter(null, Semester.THIRD);
+		quarterRepo.save(quarter3);
+
+		SchoolQuarter quarter4 = new SchoolQuarter(null, Semester.FOUR);
+		quarterRepo.save(quarter4);
+
 		// Curso * Disciplina
 		Course c1 = new Course(null, "Analise e Desenvolvimento de Sistemas");
 		Course c2 = new Course(null, "Matemática Aplicada");
@@ -191,19 +208,64 @@ public class DBTestService {
 		Student st1 = new Student(null, "Dowglas Maia", Genero.MALE, "57194371006", nascDatest1, LocalDate.now(), null,
 				null, null, "dg@maia.com", "123", "62-9000-1111", LevelEducation.COLLEGE_EDUCATION, Schedule.NIGHT, sg1,
 				school_1, a1);
+		st1.getQuarters().add(quarter);
+		
 		Student st2 = new Student(null, "Kayron Maia", Genero.MALE, "52407199006", nascDatest2, LocalDate.now(), null,
 				null, null, "km@maia.com", "123", "62-9000-1111", LevelEducation.COLLEGE_EDUCATION, Schedule.NIGHT, sg1,
 				school_1, a1);
+		st1.getQuarters().add(quarter);
+		
 		Student st3 = new Student(null, "Shirle Maia", Genero.FAMALE, "84855228001", nascDatest3, LocalDate.now(), null,
 				null, null, "sm@maia.com", "123", "62-9000-1111", LevelEducation.HIGH_SCHOOL, Schedule.MORNING, sg2,
 				school_1, a2);
+		st1.getQuarters().add(quarter2);
+		quarter2.getStudents().add(st3);
+		
 		Student st4 = new Student(null, "Marcela Lima", Genero.FAMALE, "04620849065", nascDatest4, LocalDate.now(),
 				null, null, "Carlos", "mc@maia.com", "123", "62-9000-1111", LevelEducation.CHILD_EDUCATION,
 				Schedule.FULL_TIME, sg3, school_1, a2);
+		st1.getQuarters().add(quarter2);
+		
+		// COURSE DO ST1
+
 		studentRepo.save(st1);
 		studentRepo.save(st2);
 		studentRepo.save(st3);
 		studentRepo.save(st4);
+
+		// ==== NOTAS DO ALUNO 01 P/ 01 Bimestre === //
+		StudentNote note = new StudentNote(null, c1, st1, 10.0, quarter);
+		quarter.getNotes().add(note);
+		noteRepository.save(note);
+
+		StudentNote note1 = new StudentNote(null, c2, st1, 7.0, quarter);
+		quarter.getNotes().add(note1);
+		noteRepository.save(note1);
+
+		StudentNote note2 = new StudentNote(null, c3, st1, 6.89, quarter);
+		quarter.getNotes().add(note2);
+		noteRepository.save(note2);
+
+		StudentNote note3 = new StudentNote(null, c4, st1, 5.9, quarter);
+		quarter.getNotes().add(note3);
+		noteRepository.save(note3);
+
+		// ==== NOTAS DO ALUNO 01 P/ 02 Bimestre === //
+		StudentNote nT1 = new StudentNote(null, c1, st1, 6.75, quarter2);
+		quarter2.getNotes().add(nT1);
+		noteRepository.save(nT1);
+
+		StudentNote nT2 = new StudentNote(null, c2, st1, 8.75, quarter2);
+		quarter2.getNotes().add(nT2);
+		noteRepository.save(nT2);
+
+		StudentNote nT3 = new StudentNote(null, c3, st1, 9.25, quarter2);
+		quarter2.getNotes().add(nT3);
+		noteRepository.save(nT3);
+
+		StudentNote nT4 = new StudentNote(null, c4, st1, 5.50, quarter2);
+		quarter2.getNotes().add(nT4);
+		noteRepository.save(nT4);
 
 	}
 
