@@ -1,10 +1,8 @@
 package org.com.maia.ge.services.util;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +13,7 @@ import org.com.maia.ge.entity.District;
 import org.com.maia.ge.entity.Institution;
 import org.com.maia.ge.entity.Room;
 import org.com.maia.ge.entity.SchoolGrade;
+import org.com.maia.ge.entity.SchoolQuarter;
 import org.com.maia.ge.entity.Student;
 import org.com.maia.ge.entity.enums.Genero;
 import org.com.maia.ge.entity.enums.LevelEducation;
@@ -26,6 +25,7 @@ import org.com.maia.ge.repository.DistrictRepository;
 import org.com.maia.ge.repository.InstitutionRepository;
 import org.com.maia.ge.repository.RoomRepository;
 import org.com.maia.ge.repository.SchoolGradeRepository;
+import org.com.maia.ge.repository.StudentNoteRepository;
 import org.com.maia.ge.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +56,13 @@ public class DBTestService {
 
 	@Autowired
 	private StudentRepository studentRepo;
+	
+	@Autowired
+	private StudentNoteRepository noteRepository;
+	
+	@Autowired
+	private SchoolQuarter quarter;
+	
 
 	public void instanciateTestDatabase() throws ParseException {
 

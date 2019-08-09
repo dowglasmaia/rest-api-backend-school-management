@@ -5,10 +5,12 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -95,33 +98,36 @@ public class Student implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private LevelEducation schoolLevel; // nivel escolar
 
-	
 	@NotNull(message = "Field schedule is required")
 	@Enumerated(EnumType.STRING)
 	private Schedule schedule; // turno / horario
 
-	
 	@Valid
 	@ManyToOne
 	private SchoolGrade schoolGrade; // serie escolar
-
-	@JsonIgnore
-	@ManyToMany(mappedBy = "students")
-	private Set<Course> courses = new HashSet<>(); // materias
-	
-	@ManyToMany
-	@JoinTable(name = "Teacher_Student", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
-	private Set<Teacher> teachers = new HashSet<>(); // professores
 
 	@JsonIgnore
 	@Valid
 	@ManyToOne
 	private Institution institution; // escola
 
-		
 	@Valid
 	@ManyToOne
 	private Address address; // endereço
+
+	@JsonIgnore
+	@ManyToMany(mappedBy = "students")
+	private Set<Course> courses = new HashSet<>(); // materias
+
+	@ManyToMany
+	@JoinTable(name = "Teacher_Student", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
+	private Set<Teacher> teachers = new HashSet<>(); // professores
+
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
+	private Set<StudentNote> notes = new HashSet<>();
+
+	@ManyToMany(mappedBy = "students")
+	private Set<SchoolQuarter> quarters = new HashSet<>();
 
 	// constructor
 	public Student() {
@@ -315,6 +321,14 @@ public class Student implements Serializable {
 
 	public void setCourses(Set<Course> courses) {
 		this.courses = courses;
+	}
+
+	public Set<StudentNote> getNotes() {
+		return notes;
+	}
+
+	public Set<SchoolQuarter> getQuarters() {
+		return quarters;
 	}
 
 	@Override

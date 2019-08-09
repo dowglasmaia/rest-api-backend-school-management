@@ -8,12 +8,14 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -47,6 +49,9 @@ public class Course implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "Student_Course", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private Set<Student> students = new HashSet<>();
+	
+	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+	private Set<StudentNote>notes = new HashSet<>();
 
 	public Course() {
 		// TODO Auto-generated constructor stub
@@ -83,6 +88,10 @@ public class Course implements Serializable {
 		this.students = students;
 	}
 
+	public Set<StudentNote> getNotes() {
+		return notes;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
