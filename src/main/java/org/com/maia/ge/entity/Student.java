@@ -115,9 +115,10 @@ public class Student implements Serializable {
 	@ManyToOne
 	private Address address; // endereço
 
-	@JsonIgnore
-	@ManyToMany(mappedBy = "students")
-	private Set<Course> courses = new HashSet<>(); // materias
+	//@JsonIgnore
+	@ManyToMany
+	@JoinTable(name = "Student_Course", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course"))
+	private Set<Course> courses = new HashSet<>();
 
 	@ManyToMany
 	@JoinTable(name = "Teacher_Student", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
@@ -159,6 +160,15 @@ public class Student implements Serializable {
 	}
 
 	/* == GETTERS E SETTERS == */
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -171,14 +181,6 @@ public class Student implements Serializable {
 		return name;
 	}
 
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -189,6 +191,14 @@ public class Student implements Serializable {
 
 	public void setGenero(Genero genero) {
 		this.genero = genero;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public LocalDate getDateOfBirth() {
@@ -247,6 +257,14 @@ public class Student implements Serializable {
 		this.password = password;
 	}
 
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	public String getTelephone() {
 		return telephone;
 	}
@@ -287,28 +305,28 @@ public class Student implements Serializable {
 		this.address = address;
 	}
 
-	public Set<Course> getCourses() {
-		return courses;
-	}
-
 	public Set<Teacher> getTeachers() {
 		return teachers;
 	}
 
-	public String getToken() {
-		return token;
+	public void setTeachers(Set<Teacher> teachers) {
+		this.teachers = teachers;
 	}
 
-	public void setToken(String token) {
-		this.token = token;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+	public Set<Course> getCourses() {
+		return courses;
+	}
+
+	public void setNotes(Set<StudentNote> notes) {
+		this.notes = notes;
+	}
+
+	public void setQuarters(Set<SchoolQuarter> quarters) {
+		this.quarters = quarters;
 	}
 
 	public SchoolGrade getSchoolGrade() {

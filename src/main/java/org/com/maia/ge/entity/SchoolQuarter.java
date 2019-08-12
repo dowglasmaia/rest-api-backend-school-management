@@ -41,7 +41,7 @@ public class SchoolQuarter implements Serializable {
 	private Semester number;
 
 	@ManyToMany
-	@JoinTable(name = "Student_Semester", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "semester_id"))
+	@JoinTable(name = "Student_Semester", joinColumns = @JoinColumn(name = "semester_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
 	private Set<Student> students = new HashSet<>();
 	
 	

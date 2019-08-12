@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Dowglas Maia
  * @since Class Nota
@@ -29,10 +31,12 @@ public class StudentNote implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@JsonIgnore
 	@NotNull
 	@ManyToOne
 	private Course course; // materia
 
+	@JsonIgnore
 	@NotNull
 	@ManyToOne
 	private Student student; // aluno
@@ -40,6 +44,7 @@ public class StudentNote implements Serializable {
 	@NotNull
 	private Double noteValue; // nota
 
+	@JsonIgnore
 	@NotNull
 	@ManyToOne
 	private SchoolQuarter quarter; // bimestre

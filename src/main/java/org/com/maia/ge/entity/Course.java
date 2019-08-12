@@ -43,15 +43,14 @@ public class Course implements Serializable {
 
 	@JsonIgnore
 	@ManyToMany(mappedBy = "courses")
-	private List<SchoolGrade> grades = new ArrayList<>();
+	private Set<SchoolGrade> grades = new HashSet<>();
 
 	@JsonIgnore
-	@ManyToMany
-	@JoinTable(name = "Student_Course", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+	@ManyToMany(mappedBy = "courses")
 	private Set<Student> students = new HashSet<>();
-	
+
 	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-	private Set<StudentNote>notes = new HashSet<>();
+	private Set<StudentNote> notes = new HashSet<>();
 
 	public Course() {
 		// TODO Auto-generated constructor stub
@@ -80,18 +79,18 @@ public class Course implements Serializable {
 		this.name = name;
 	}
 
-	public List<SchoolGrade> getGrades() {
+	public Set<SchoolGrade> getGrades() {
 		return grades;
-	}
-
-	public void setStudents(Set<Student> students) {
-		this.students = students;
 	}
 
 	public Set<StudentNote> getNotes() {
 		return notes;
 	}
-	
+
+	public Set<Student> getStudents() {
+		return students;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

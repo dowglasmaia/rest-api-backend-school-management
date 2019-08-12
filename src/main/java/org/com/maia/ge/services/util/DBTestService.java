@@ -183,10 +183,8 @@ public class DBTestService {
 		SchoolGrade sg2 = new SchoolGrade(null, "8ª", "B", 20, 20, room);
 		SchoolGrade sg3 = new SchoolGrade(null, "6ª", "C", 20, 20, room);
 		SchoolGrade sg4 = new SchoolGrade(null, "5ª", "D", 20, 20, room1);
-		sg1.getCourses().add(c1);
-		sg1.getCourses().add(c2);
-		sg1.getCourses().add(c3);
-		sg4.getCourses().add(c1);
+		
+		sg1.getCourses().addAll(courses);
 
 		room.getGrades().add(sg1);
 		room.getGrades().add(sg2);
@@ -198,7 +196,14 @@ public class DBTestService {
 		gradeRepo.save(sg3);
 		gradeRepo.save(sg4);
 
-		// **** Student ***//
+		
+		// **** Student ***//		
+		Set<Course> courses1 = new HashSet<>();
+		courses.add(c1);
+		courses.add(c2);
+		courses.add(c3);
+		courses.add(c4);
+		
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate nascDatest1 = LocalDate.parse("20/10/1990", formato);
 		LocalDate nascDatest2 = LocalDate.parse("02/07/1989", formato);
@@ -207,26 +212,21 @@ public class DBTestService {
 
 		Student st1 = new Student(null, "Dowglas Maia", Genero.MALE, "57194371006", nascDatest1, LocalDate.now(), null,
 				null, null, "dg@maia.com", "123", "62-9000-1111", LevelEducation.COLLEGE_EDUCATION, Schedule.NIGHT, sg1,
-				school_1, a1);
-		st1.getQuarters().add(quarter);
+				school_1, a1);	
 		
 		Student st2 = new Student(null, "Kayron Maia", Genero.MALE, "52407199006", nascDatest2, LocalDate.now(), null,
-				null, null, "km@maia.com", "123", "62-9000-1111", LevelEducation.COLLEGE_EDUCATION, Schedule.NIGHT, sg1,
-				school_1, a1);
-		st1.getQuarters().add(quarter);
+				null, null, "km@maia.com", "123", "62-9000-1111", LevelEducation.COLLEGE_EDUCATION, Schedule.NIGHT, sg2,
+				school_1, a1);	
 		
 		Student st3 = new Student(null, "Shirle Maia", Genero.FAMALE, "84855228001", nascDatest3, LocalDate.now(), null,
 				null, null, "sm@maia.com", "123", "62-9000-1111", LevelEducation.HIGH_SCHOOL, Schedule.MORNING, sg2,
-				school_1, a2);
-		st1.getQuarters().add(quarter2);
-		quarter2.getStudents().add(st3);
+				school_1, a2);	
 		
 		Student st4 = new Student(null, "Marcela Lima", Genero.FAMALE, "04620849065", nascDatest4, LocalDate.now(),
 				null, null, "Carlos", "mc@maia.com", "123", "62-9000-1111", LevelEducation.CHILD_EDUCATION,
 				Schedule.FULL_TIME, sg3, school_1, a2);
-		st1.getQuarters().add(quarter2);
 		
-		// COURSE DO ST1
+		st1.getCourses().addAll(courses1);		
 
 		studentRepo.save(st1);
 		studentRepo.save(st2);
@@ -234,39 +234,60 @@ public class DBTestService {
 		studentRepo.save(st4);
 
 		// ==== NOTAS DO ALUNO 01 P/ 01 Bimestre === //
-		StudentNote note = new StudentNote(null, c1, st1, 10.0, quarter);
+			
+		
+		StudentNote note = new StudentNote(null, c1, st1, 10.0, quarter);		
 		quarter.getNotes().add(note);
+		quarter.getStudents().add(st1);
+		
 		noteRepository.save(note);
 
 		StudentNote note1 = new StudentNote(null, c2, st1, 7.0, quarter);
 		quarter.getNotes().add(note1);
+		quarter.getStudents().add(st1);
 		noteRepository.save(note1);
 
 		StudentNote note2 = new StudentNote(null, c3, st1, 6.89, quarter);
 		quarter.getNotes().add(note2);
+		quarter.getStudents().add(st1);
 		noteRepository.save(note2);
 
 		StudentNote note3 = new StudentNote(null, c4, st1, 5.9, quarter);
 		quarter.getNotes().add(note3);
+		quarter.getStudents().add(st1);
 		noteRepository.save(note3);
 
 		// ==== NOTAS DO ALUNO 01 P/ 02 Bimestre === //
 		StudentNote nT1 = new StudentNote(null, c1, st1, 6.75, quarter2);
 		quarter2.getNotes().add(nT1);
+		quarter.getStudents().add(st1);
 		noteRepository.save(nT1);
 
 		StudentNote nT2 = new StudentNote(null, c2, st1, 8.75, quarter2);
 		quarter2.getNotes().add(nT2);
+		quarter.getStudents().add(st1);
 		noteRepository.save(nT2);
 
 		StudentNote nT3 = new StudentNote(null, c3, st1, 9.25, quarter2);
 		quarter2.getNotes().add(nT3);
+		quarter.getStudents().add(st1);
 		noteRepository.save(nT3);
 
 		StudentNote nT4 = new StudentNote(null, c4, st1, 5.50, quarter2);
 		quarter2.getNotes().add(nT4);
+		quarter.getStudents().add(st1);
 		noteRepository.save(nT4);
-
+		
+		st1.getNotes().add(note1);
+		st1.getNotes().add(note2);
+		st1.getNotes().add(note3);
+		st1.getNotes().add(note);
+		st1.getNotes().add(nT1);
+		st1.getNotes().add(nT2);
+		st1.getNotes().add(nT3);
+		st1.getNotes().add(nT4);
+		
+		
 	}
 
 }
