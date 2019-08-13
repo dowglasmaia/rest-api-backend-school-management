@@ -1,9 +1,7 @@
 package org.com.maia.ge.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -41,16 +37,12 @@ public class Course implements Serializable {
 	@Column(length = 50, nullable = false)
 	private String name;
 
+	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+	private Set<StudentNote> notes = new HashSet<>();
+
 	@JsonIgnore
 	@ManyToMany(mappedBy = "courses")
 	private Set<SchoolGrade> grades = new HashSet<>();
-
-	@JsonIgnore
-	@ManyToMany(mappedBy = "courses")
-	private Set<Student> students = new HashSet<>();
-
-	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-	private Set<StudentNote> notes = new HashSet<>();
 
 	public Course() {
 		// TODO Auto-generated constructor stub
@@ -87,10 +79,7 @@ public class Course implements Serializable {
 		return notes;
 	}
 
-	public Set<Student> getStudents() {
-		return students;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

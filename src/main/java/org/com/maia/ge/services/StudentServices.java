@@ -3,6 +3,7 @@ package org.com.maia.ge.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.com.maia.ge.entity.SchoolQuarter;
 import org.com.maia.ge.entity.Student;
 import org.com.maia.ge.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,15 @@ public class StudentServices {
 	@Autowired
 	private StudentRepository repository;
 
-	// save
+	// save -- estudante, Serie, Semestre.
+	public Student save(Student obj) {
+		obj.setId(null);
+
+		for (SchoolQuarter qt : obj.getQuarters()) {
+			qt.getStudents().add(obj);
+		}
+		return repository.save(obj);
+	}
 
 	// update
 

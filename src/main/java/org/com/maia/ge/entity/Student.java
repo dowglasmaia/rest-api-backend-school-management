@@ -115,19 +115,16 @@ public class Student implements Serializable {
 	@ManyToOne
 	private Address address; // endereço
 
-	//@JsonIgnore
-	@ManyToMany
-	@JoinTable(name = "Student_Course", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course"))
-	private Set<Course> courses = new HashSet<>();
-
-	@ManyToMany
-	@JoinTable(name = "Teacher_Student", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
-	private Set<Teacher> teachers = new HashSet<>(); // professores
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
 	private Set<StudentNote> notes = new HashSet<>();
 
-	@ManyToMany(mappedBy = "students")
+	/*@ManyToMany
+	@JoinTable(name = "Student_Teacher", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
+	private Set<Teacher> teachers = new HashSet<>(); // professores
+*/
+	@ManyToMany
+	@JoinTable(name = "Student_Quarter", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "quarter_id"))
 	private Set<SchoolQuarter> quarters = new HashSet<>();
 
 	// constructor
@@ -304,21 +301,15 @@ public class Student implements Serializable {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-
+/*
 	public Set<Teacher> getTeachers() {
 		return teachers;
 	}
 
-	public void setTeachers(Set<Teacher> teachers) {
-		this.teachers = teachers;
-	}
+*/
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public Set<Course> getCourses() {
-		return courses;
 	}
 
 	public void setNotes(Set<StudentNote> notes) {
@@ -335,10 +326,6 @@ public class Student implements Serializable {
 
 	public void setSchoolGrade(SchoolGrade schoolGrade) {
 		this.schoolGrade = schoolGrade;
-	}
-
-	public void setCourses(Set<Course> courses) {
-		this.courses = courses;
 	}
 
 	public Set<StudentNote> getNotes() {

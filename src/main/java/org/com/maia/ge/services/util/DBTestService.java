@@ -197,12 +197,10 @@ public class DBTestService {
 		gradeRepo.save(sg4);
 
 		
-		// **** Student ***//		
-		Set<Course> courses1 = new HashSet<>();
-		courses.add(c1);
-		courses.add(c2);
-		courses.add(c3);
-		courses.add(c4);
+		// **** Student ***//					
+		//*****Quarter
+		Set<SchoolQuarter>qts = new HashSet<>();
+		qts.add(quarter);
 		
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate nascDatest1 = LocalDate.parse("20/10/1990", formato);
@@ -224,9 +222,12 @@ public class DBTestService {
 		
 		Student st4 = new Student(null, "Marcela Lima", Genero.FAMALE, "04620849065", nascDatest4, LocalDate.now(),
 				null, null, "Carlos", "mc@maia.com", "123", "62-9000-1111", LevelEducation.CHILD_EDUCATION,
-				Schedule.FULL_TIME, sg3, school_1, a2);
-		
-		st1.getCourses().addAll(courses1);		
+				Schedule.FULL_TIME, sg3, school_1, a2);		
+
+		st1.getQuarters().addAll(qts);
+		st2.getQuarters().addAll(qts);
+		st3.getQuarters().addAll(qts);
+		st4.getQuarters().addAll(qts);
 
 		studentRepo.save(st1);
 		studentRepo.save(st2);

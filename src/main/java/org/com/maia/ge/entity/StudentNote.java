@@ -43,8 +43,7 @@ public class StudentNote implements Serializable {
 
 	@NotNull
 	private Double noteValue; // nota
-
-	@JsonIgnore
+	
 	@NotNull
 	@ManyToOne
 	private SchoolQuarter quarter; // bimestre

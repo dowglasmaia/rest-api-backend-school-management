@@ -57,11 +57,11 @@ public class Teacher implements Serializable {
 	@NotBlank(message = "Field password is required")
 	@Column(length = 8, nullable = false)
 	private String password; // senha
-
+/*
 	@JsonIgnore
 	@ManyToMany(mappedBy = "teachers")
 	private Set<Student> students = new HashSet<>();
-
+*/ 
 	@Transient
 	private String token;
 
@@ -134,9 +134,9 @@ public class Teacher implements Serializable {
 		this.token = token;
 	}
 
-	public Set<Student> getStudents() {
-		return students;
-	}
+//	public Set<Student> getStudents() {
+//		return students;
+//	}
 
 	@Override
 	public int hashCode() {
