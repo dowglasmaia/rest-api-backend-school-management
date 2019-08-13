@@ -3,8 +3,8 @@ package org.com.maia.ge.controller;
 import java.net.URI;
 import java.util.List;
 
-import org.com.maia.ge.entity.Student;
-import org.com.maia.ge.services.StudentServices;
+import org.com.maia.ge.entity.Teacher;
+import org.com.maia.ge.services.TeacherServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/teachers")
 public class TeacherController {
 
 	@Autowired
-	private StudentServices services;
+	private TeacherServices services;
 
 	// save
 	@PostMapping
-	public ResponseEntity<Void>save(@RequestBody Student obj){
-		Student newObj = services.save(obj);
+	public ResponseEntity<Void>save(@RequestBody Teacher obj){
+		Teacher newObj = services.save(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 		
@@ -35,15 +35,15 @@ public class TeacherController {
 
 	// find by id
 	@GetMapping("/{id}")
-	public ResponseEntity<Student> findById(@PathVariable Long id) {
-		Student obj = services.findById(id);
+	public ResponseEntity<Teacher> findById(@PathVariable Long id) {
+		Teacher obj = services.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	// find all
 	@GetMapping
-	public ResponseEntity<List<Student>> getAll() {
-		List<Student> result = services.findAll();
+	public ResponseEntity<List<Teacher>> getAll() {
+		List<Teacher> result = services.findAll();
 		return ResponseEntity.ok().body(result);
 	}
 
