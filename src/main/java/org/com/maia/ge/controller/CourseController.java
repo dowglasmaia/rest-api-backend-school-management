@@ -23,18 +23,21 @@ public class CourseController {
 	@Autowired
 	private CourseServices services;
 
+	//getById
 	@GetMapping("/{id}")
 	public ResponseEntity<Course> findById(@PathVariable Long id) {
 		Course obj = services.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
+	//getAll
 	@GetMapping
 	public ResponseEntity<List<Course>> findAll() {
 		List<Course> result = services.findAll();
 		return ResponseEntity.ok().body(result);
 	}
 
+	//save
 	@PostMapping
 	public ResponseEntity<Course> save(@RequestBody CourseNewDTO objDTO) {
 		Course obj = services.fromDTO(objDTO);

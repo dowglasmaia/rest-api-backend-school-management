@@ -23,7 +23,7 @@ import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
 @Audited
-@AuditTable(value = "audit_course")
+@AuditTable(value = "course_audit")
 @Table
 @Entity
 public class Institution implements Serializable {

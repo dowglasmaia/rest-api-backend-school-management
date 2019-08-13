@@ -18,12 +18,14 @@ public class AddressController {
 	@Autowired
 	private AddressServices services;
 
+	//getById
 	@GetMapping("/{id}")
 	public ResponseEntity<Address> findById(@PathVariable Long id) {
 		Address obj = services.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
+	//getAll
 	@GetMapping
 	public ResponseEntity<List<Address>> findAll() {
 		List<Address> result = services.findAll();

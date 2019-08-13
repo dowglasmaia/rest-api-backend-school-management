@@ -18,12 +18,14 @@ public class DistrictController {
 	@Autowired
 	private DistrictServices services;
 
+	//getById
 	@GetMapping("/{id}")
 	public ResponseEntity<District> findById(@PathVariable Long id) {
 		District obj = services.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
+	//getAll
 	@GetMapping
 	public ResponseEntity<List<District>> findAll() {
 		List<District> list = services.findAll();

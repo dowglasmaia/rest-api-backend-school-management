@@ -35,9 +35,10 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Audited
-@AuditTable(value = "audit_student")
+@AuditTable(value = "student_audit")
 @Table
 @Entity
 public class Student implements Serializable {
@@ -91,7 +92,7 @@ public class Student implements Serializable {
 	private String token;
 
 	@NotBlank(message = "Field telephone is required")
-	@Column(length = 12, nullable = false)
+	@Column(length = 16, nullable = false)
 	private String telephone; // telefone
 
 	@NotNull(message = "Field school level is required")
@@ -119,10 +120,6 @@ public class Student implements Serializable {
 	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
 	private Set<StudentNote> notes = new HashSet<>();
 
-	/*@ManyToMany
-	@JoinTable(name = "Student_Teacher", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
-	private Set<Teacher> teachers = new HashSet<>(); // professores
-*/
 	@ManyToMany
 	@JoinTable(name = "Student_Quarter", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "quarter_id"))
 	private Set<SchoolQuarter> quarters = new HashSet<>();
@@ -157,14 +154,6 @@ public class Student implements Serializable {
 	}
 
 	/* == GETTERS E SETTERS == */
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
 
 	public Long getId() {
 		return id;
@@ -246,10 +235,12 @@ public class Student implements Serializable {
 		this.email = email;
 	}
 
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
 
+	@JsonProperty
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -301,12 +292,6 @@ public class Student implements Serializable {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-/*
-	public Set<Teacher> getTeachers() {
-		return teachers;
-	}
-
-*/
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -334,6 +319,14 @@ public class Student implements Serializable {
 
 	public Set<SchoolQuarter> getQuarters() {
 		return quarters;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override

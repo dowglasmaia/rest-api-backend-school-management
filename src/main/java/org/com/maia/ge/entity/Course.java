@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /* == Disciplina  ==*/
 
 @Audited
-@AuditTable(value = "audit_course")
+@AuditTable(value = "course_audit")
 @Table
 @Entity
 public class Course implements Serializable {
@@ -43,6 +43,9 @@ public class Course implements Serializable {
 	@JsonIgnore
 	@ManyToMany(mappedBy = "courses")
 	private Set<SchoolGrade> grades = new HashSet<>();
+
+	@ManyToMany(mappedBy = "courses")
+	private Set<Teacher> teachers = new HashSet<>();
 
 	public Course() {
 		// TODO Auto-generated constructor stub
@@ -79,7 +82,10 @@ public class Course implements Serializable {
 		return notes;
 	}
 
-	
+	public Set<Teacher> getTeachers() {
+		return teachers;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /*Endereço */
 
 @Audited
-@AuditTable(value = "audit_Addres")
+@AuditTable(value = "addres_audit")
 @Table
 @Entity
 public class Address implements Serializable {

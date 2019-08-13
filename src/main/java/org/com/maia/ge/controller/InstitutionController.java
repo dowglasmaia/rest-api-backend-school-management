@@ -25,12 +25,14 @@ public class InstitutionController {
 	@Autowired
 	private InstitutionServices services;
 
+	//getById
 	@GetMapping("/{id}")
 	public ResponseEntity<Institution> findById(@PathVariable Long id) {
 		Institution obj = services.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
+	//getAll
 	@GetMapping
 	public ResponseEntity<List<Institution>> findAll() {
 		List<Institution> result = services.findAll();

@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /* Sala */
 
 @Audited
-@AuditTable(value = "audit_room")
+@AuditTable(value = "room_audit")
 @Table
 @Entity
 public class Room implements Serializable {

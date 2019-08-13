@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /*Serie Escolar */
 
 @Audited
-@AuditTable(value = "audit_school_grade")
+@AuditTable(value = "school_grade_audit")
 @Table
 @Entity
 public class SchoolGrade implements Serializable {

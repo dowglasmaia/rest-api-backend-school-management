@@ -25,12 +25,14 @@ public class RoomController {
 	@Autowired
 	private RoomServices services;
 
+	//getById
 	@GetMapping("/{id}")
 	public ResponseEntity<Room> findById(@PathVariable Long id) {
 		Room obj = services.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
+	//getAll
 	@GetMapping
 	public ResponseEntity<List<Room>> findAll() {
 		List<Room> result = services.findAll();

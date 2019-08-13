@@ -6,23 +6,30 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+import org.com.maia.ge.entity.enums.Genero;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Audited
-@AuditTable(value = "audit_teacher")
+@AuditTable(value = "teacher_audit")
 @Table
 @Entity
 public class Teacher implements Serializable {
@@ -36,9 +43,9 @@ public class Teacher implements Serializable {
 	@Column(length = 50, nullable = false)
 	private String name; // nome
 
-	@NotBlank(message = "Field genero is required")
-	@Column(length = 50, nullable = false)
-	private String genero;// genero / sexo
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private Genero genero; // sexo
 
 	@NotBlank(message = "Field cpf is required")
 	@CPF(message = "invalid CPF")
@@ -46,7 +53,7 @@ public class Teacher implements Serializable {
 	private String cpf; // identification document
 
 	@NotBlank(message = "Field telephone is required")
-	@Column(length = 12, nullable = false)
+	@Column(length = 16, nullable = false)
 	private String telephone; // telefone/ celular
 
 	@NotBlank(message = "Field e-mail is required")
@@ -57,16 +64,28 @@ public class Teacher implements Serializable {
 	@NotBlank(message = "Field password is required")
 	@Column(length = 8, nullable = false)
 	private String password; // senha
-/*
-	@JsonIgnore
-	@ManyToMany(mappedBy = "teachers")
-	private Set<Student> students = new HashSet<>();
-*/ 
+
 	@Transient
 	private String token;
 
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name = "Teacher_Course", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+	private Set<Course> courses = new HashSet<>();
+
 	public Teacher() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public Teacher(Long id, String name, Genero genero, String cpf, String telephone, String email, String password) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.genero = genero;
+		this.cpf = cpf;
+		this.telephone = telephone;
+		this.email = email;
+		this.password = password;
 	}
 
 	/* == GETTERS E SETTERS == */
@@ -86,11 +105,11 @@ public class Teacher implements Serializable {
 		this.name = name;
 	}
 
-	public String getGenero() {
+	public Genero getGenero() {
 		return genero;
 	}
 
-	public void setGenero(String genero) {
+	public void setGenero(Genero genero) {
 		this.genero = genero;
 	}
 
@@ -118,10 +137,12 @@ public class Teacher implements Serializable {
 		this.email = email;
 	}
 
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
 
+	@JsonProperty
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -134,9 +155,9 @@ public class Teacher implements Serializable {
 		this.token = token;
 	}
 
-//	public Set<Student> getStudents() {
-//		return students;
-//	}
+	public Set<Course> getCourses() {
+		return courses;
+	}
 
 	@Override
 	public int hashCode() {

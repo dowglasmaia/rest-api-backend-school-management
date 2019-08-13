@@ -18,6 +18,7 @@ import org.com.maia.ge.entity.SchoolGrade;
 import org.com.maia.ge.entity.SchoolQuarter;
 import org.com.maia.ge.entity.Student;
 import org.com.maia.ge.entity.StudentNote;
+import org.com.maia.ge.entity.Teacher;
 import org.com.maia.ge.entity.enums.Genero;
 import org.com.maia.ge.entity.enums.LevelEducation;
 import org.com.maia.ge.entity.enums.Schedule;
@@ -32,6 +33,7 @@ import org.com.maia.ge.repository.SchoolGradeRepository;
 import org.com.maia.ge.repository.SchoolQuarterRepository;
 import org.com.maia.ge.repository.StudentNoteRepository;
 import org.com.maia.ge.repository.StudentRepository;
+import org.com.maia.ge.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +69,9 @@ public class DBTestService {
 
 	@Autowired
 	private SchoolQuarterRepository quarterRepo;
+
+	@Autowired
+	private TeacherRepository teacherRepo;
 
 	public void instanciateTestDatabase() throws ParseException {
 
@@ -164,13 +169,13 @@ public class DBTestService {
 		Course c1 = new Course(null, "Analise e Desenvolvimento de Sistemas");
 		Course c2 = new Course(null, "Matemática Aplicada");
 		Course c3 = new Course(null, "Banco de Dados");
-
 		Course c4 = new Course(null, "Analise de Dados");
 
 		courseRepo.save(c1);
 		courseRepo.save(c2);
 		courseRepo.save(c3);
 		courseRepo.save(c4);
+
 		// Lista de Curso para a Class SG1
 		Set<Course> courses = new HashSet<>();
 		courses.add(c1);
@@ -183,7 +188,7 @@ public class DBTestService {
 		SchoolGrade sg2 = new SchoolGrade(null, "8ª", "B", 20, 20, room);
 		SchoolGrade sg3 = new SchoolGrade(null, "6ª", "C", 20, 20, room);
 		SchoolGrade sg4 = new SchoolGrade(null, "5ª", "D", 20, 20, room1);
-		
+
 		sg1.getCourses().addAll(courses);
 
 		room.getGrades().add(sg1);
@@ -196,12 +201,11 @@ public class DBTestService {
 		gradeRepo.save(sg3);
 		gradeRepo.save(sg4);
 
-		
-		// **** Student ***//					
-		//*****Quarter
-		Set<SchoolQuarter>qts = new HashSet<>();
+		// **** Student ***//
+		// *****Quarter
+		Set<SchoolQuarter> qts = new HashSet<>();
 		qts.add(quarter);
-		
+
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate nascDatest1 = LocalDate.parse("20/10/1990", formato);
 		LocalDate nascDatest2 = LocalDate.parse("02/07/1989", formato);
@@ -210,19 +214,19 @@ public class DBTestService {
 
 		Student st1 = new Student(null, "Dowglas Maia", Genero.MALE, "57194371006", nascDatest1, LocalDate.now(), null,
 				null, null, "dg@maia.com", "123", "62-9000-1111", LevelEducation.COLLEGE_EDUCATION, Schedule.NIGHT, sg1,
-				school_1, a1);	
-		
+				school_1, a1);
+
 		Student st2 = new Student(null, "Kayron Maia", Genero.MALE, "52407199006", nascDatest2, LocalDate.now(), null,
 				null, null, "km@maia.com", "123", "62-9000-1111", LevelEducation.COLLEGE_EDUCATION, Schedule.NIGHT, sg2,
-				school_1, a1);	
-		
+				school_1, a1);
+
 		Student st3 = new Student(null, "Shirle Maia", Genero.FAMALE, "84855228001", nascDatest3, LocalDate.now(), null,
 				null, null, "sm@maia.com", "123", "62-9000-1111", LevelEducation.HIGH_SCHOOL, Schedule.MORNING, sg2,
-				school_1, a2);	
-		
+				school_1, a2);
+
 		Student st4 = new Student(null, "Marcela Lima", Genero.FAMALE, "04620849065", nascDatest4, LocalDate.now(),
 				null, null, "Carlos", "mc@maia.com", "123", "62-9000-1111", LevelEducation.CHILD_EDUCATION,
-				Schedule.FULL_TIME, sg3, school_1, a2);		
+				Schedule.FULL_TIME, sg3, school_1, a2);
 
 		st1.getQuarters().addAll(qts);
 		st2.getQuarters().addAll(qts);
@@ -235,12 +239,11 @@ public class DBTestService {
 		studentRepo.save(st4);
 
 		// ==== NOTAS DO ALUNO 01 P/ 01 Bimestre === //
-			
-		
-		StudentNote note = new StudentNote(null, c1, st1, 10.0, quarter);		
+
+		StudentNote note = new StudentNote(null, c1, st1, 10.0, quarter);
 		quarter.getNotes().add(note);
 		quarter.getStudents().add(st1);
-		
+
 		noteRepository.save(note);
 
 		StudentNote note1 = new StudentNote(null, c2, st1, 7.0, quarter);
@@ -278,7 +281,7 @@ public class DBTestService {
 		quarter2.getNotes().add(nT4);
 		quarter.getStudents().add(st1);
 		noteRepository.save(nT4);
-		
+
 		st1.getNotes().add(note1);
 		st1.getNotes().add(note2);
 		st1.getNotes().add(note3);
@@ -287,8 +290,28 @@ public class DBTestService {
 		st1.getNotes().add(nT2);
 		st1.getNotes().add(nT3);
 		st1.getNotes().add(nT4);
+		// ==== and Student ====//
+
+		// ==== TEACHER ====//
+		Teacher t1 = new Teacher(null, "Kamilly Maia", Genero.FAMALE, "31597875082", "(062)99999-9999", "km@maia.com",
+				"123");
+		Teacher t2 = new Teacher(null, "Kayron Maia", Genero.MALE, "37838419093", "(062)99999-9999", "krom@maia.com",
+				"123");
+		Teacher t3 = new Teacher(null, "Shirle Maia", Genero.FAMALE, "56934535022", "(062)99999-9999", "sh@maia.com.br",
+				"123");
+		t1.getCourses().add(c1);
+		t1.getCourses().add(c2);
+		t1.getCourses().add(c3);
 		
+		t2.getCourses().add(c1);
+		t2.getCourses().add(c4);
 		
+		t3.getCourses().add(c1);
+		
+		teacherRepo.save(t1);
+		teacherRepo.save(t2);
+		teacherRepo.save(t3);
+
 	}
 
 }

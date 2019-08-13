@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /*Cidade */
 
 @Audited
-@AuditTable(value = "audit_city")
+@AuditTable(value = "city_audit")
 @Table
 @Entity
 public class City implements Serializable {

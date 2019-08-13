@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 
 @Audited
-@AuditTable(value = "audit_school_quarter")
+@AuditTable(value = "school_quarter_audit")
 @Table
 @Entity
 public class SchoolQuarter implements Serializable {
