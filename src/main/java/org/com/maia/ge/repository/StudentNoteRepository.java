@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StudentNoteRepository extends JpaRepository<StudentNote, Long> {
 
+	
+	
 }

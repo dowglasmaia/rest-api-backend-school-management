@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.com.maia.ge.entity.SchoolQuarter;
 import org.com.maia.ge.entity.Student;
+import org.com.maia.ge.entity.StudentNote;
 import org.com.maia.ge.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ public class StudentServices {
 
 	@Autowired
 	private StudentRepository repository;
+
 
 	// save -- estudante, Serie, Semestre.
 	public Student save(Student obj) {
@@ -36,6 +38,12 @@ public class StudentServices {
 	// find all
 	public List<Student> findAll() {
 		List<Student> result = repository.findAll();
+		return result;
+	}
+
+	// find notes by id student
+	public List<StudentNote> getNotesByStudentId(Long studentId) {
+		List<StudentNote> result = repository.findByNote(studentId);
 		return result;
 	}
 

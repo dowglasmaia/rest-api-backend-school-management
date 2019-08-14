@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.com.maia.ge.entity.Student;
+import org.com.maia.ge.entity.StudentNote;
 import org.com.maia.ge.services.StudentServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,11 +26,11 @@ public class StudentController {
 
 	// save
 	@PostMapping
-	public ResponseEntity<Void>save(@RequestBody Student obj){
+	public ResponseEntity<Void> save(@RequestBody Student obj) {
 		Student newObj = services.save(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
-		
+
 	}
 
 	// update
@@ -47,9 +49,14 @@ public class StudentController {
 		return ResponseEntity.ok().body(result);
 	}
 
-	//find notas ***students/notes?studentid=1
-	
-	
+	// find notas ***students/notes?studentid=1
+	@GetMapping("/notes")
+	public ResponseEntity<List<StudentNote>> getNotesOfStudents(@RequestParam(value = "studentId") Long studentId) {
+		List<StudentNote> result = services.getNotesByStudentId(studentId);
+		return ResponseEntity.ok().body(result);
+
+	}
+
 	// find by email
 
 	// find by cpf
