@@ -47,6 +47,9 @@ public class StudentController {
 		return ResponseEntity.ok().body(result);
 	}
 
+	//find notas ***students/notes?studentid=1
+	
+	
 	// find by email
 
 	// find by cpf

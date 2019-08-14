@@ -201,6 +201,26 @@ public class DBTestService {
 		gradeRepo.save(sg3);
 		gradeRepo.save(sg4);
 
+		// ==== TEACHER ====//
+		Teacher t1 = new Teacher(null, "Kamilly Maia", Genero.FAMALE, "31597875082", "(062)99999-9999", "km@maia.com",
+				"123");
+		Teacher t2 = new Teacher(null, "Kayron Maia", Genero.MALE, "37838419093", "(062)99999-9999", "krom@maia.com",
+				"123");
+		Teacher t3 = new Teacher(null, "Shirle Maia", Genero.FAMALE, "56934535022", "(062)99999-9999", "sh@maia.com.br",
+				"123");
+		t1.getCourses().add(c1);
+		t1.getCourses().add(c2);
+		t1.getCourses().add(c4);
+
+		t2.getCourses().add(c1);
+		t2.getCourses().add(c3);
+
+		t3.getCourses().add(c4);
+
+		teacherRepo.save(t1);
+		teacherRepo.save(t2);
+		teacherRepo.save(t3);
+
 		// **** Student ***//
 		// *****Quarter
 		Set<SchoolQuarter> qts = new HashSet<>();
@@ -240,44 +260,44 @@ public class DBTestService {
 
 		// ==== NOTAS DO ALUNO 01 P/ 01 Bimestre === //
 
-		StudentNote note = new StudentNote(null, c1, st1, 10.0, quarter);
+		StudentNote note = new StudentNote(null, c1, st1, 10.0, quarter,t1 );
 		quarter.getNotes().add(note);
 		quarter.getStudents().add(st1);
 
 		noteRepository.save(note);
 
-		StudentNote note1 = new StudentNote(null, c2, st1, 7.0, quarter);
+		StudentNote note1 = new StudentNote(null, c2, st1, 7.0, quarter, t1);
 		quarter.getNotes().add(note1);
 		quarter.getStudents().add(st1);
 		noteRepository.save(note1);
 
-		StudentNote note2 = new StudentNote(null, c3, st1, 6.89, quarter);
+		StudentNote note2 = new StudentNote(null, c3, st1, 6.89, quarter,t2);
 		quarter.getNotes().add(note2);
 		quarter.getStudents().add(st1);
 		noteRepository.save(note2);
 
-		StudentNote note3 = new StudentNote(null, c4, st1, 5.9, quarter);
+		StudentNote note3 = new StudentNote(null, c4, st1, 5.9, quarter,t3);
 		quarter.getNotes().add(note3);
 		quarter.getStudents().add(st1);
 		noteRepository.save(note3);
 
 		// ==== NOTAS DO ALUNO 01 P/ 02 Bimestre === //
-		StudentNote nT1 = new StudentNote(null, c1, st1, 6.75, quarter2);
+		StudentNote nT1 = new StudentNote(null, c1, st1, 6.75, quarter2,t1);
 		quarter2.getNotes().add(nT1);
 		quarter.getStudents().add(st1);
 		noteRepository.save(nT1);
 
-		StudentNote nT2 = new StudentNote(null, c2, st1, 8.75, quarter2);
+		StudentNote nT2 = new StudentNote(null, c2, st1, 8.75, quarter2,t1);
 		quarter2.getNotes().add(nT2);
 		quarter.getStudents().add(st1);
 		noteRepository.save(nT2);
 
-		StudentNote nT3 = new StudentNote(null, c3, st1, 9.25, quarter2);
+		StudentNote nT3 = new StudentNote(null, c3, st1, 9.25, quarter2,t2);
 		quarter2.getNotes().add(nT3);
 		quarter.getStudents().add(st1);
 		noteRepository.save(nT3);
 
-		StudentNote nT4 = new StudentNote(null, c4, st1, 5.50, quarter2);
+		StudentNote nT4 = new StudentNote(null, c4, st1, 5.50, quarter2,t3);
 		quarter2.getNotes().add(nT4);
 		quarter.getStudents().add(st1);
 		noteRepository.save(nT4);
@@ -291,26 +311,6 @@ public class DBTestService {
 		st1.getNotes().add(nT3);
 		st1.getNotes().add(nT4);
 		// ==== and Student ====//
-
-		// ==== TEACHER ====//
-		Teacher t1 = new Teacher(null, "Kamilly Maia", Genero.FAMALE, "31597875082", "(062)99999-9999", "km@maia.com",
-				"123");
-		Teacher t2 = new Teacher(null, "Kayron Maia", Genero.MALE, "37838419093", "(062)99999-9999", "krom@maia.com",
-				"123");
-		Teacher t3 = new Teacher(null, "Shirle Maia", Genero.FAMALE, "56934535022", "(062)99999-9999", "sh@maia.com.br",
-				"123");
-		t1.getCourses().add(c1);
-		t1.getCourses().add(c2);
-		t1.getCourses().add(c3);
-		
-		t2.getCourses().add(c1);
-		t2.getCourses().add(c4);
-		
-		t3.getCourses().add(c1);
-		
-		teacherRepo.save(t1);
-		teacherRepo.save(t2);
-		teacherRepo.save(t3);
 
 	}
 

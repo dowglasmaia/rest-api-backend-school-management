@@ -58,6 +58,7 @@ public class SchoolGrade implements Serializable {
 	@ManyToOne
 	private Room room;
 
+	@JsonIgnore
 	@ManyToMany // muitos pra muitos - uma Seria tem varias disciplinas
 	@JoinTable(name = "Grade_Course", joinColumns = @JoinColumn(name = "school_grade_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private Set<Course> courses = new HashSet<>(); // materias

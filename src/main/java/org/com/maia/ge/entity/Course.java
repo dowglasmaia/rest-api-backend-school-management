@@ -37,6 +37,7 @@ public class Course implements Serializable {
 	@Column(length = 50, nullable = false)
 	private String name;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
 	private Set<StudentNote> notes = new HashSet<>();
 

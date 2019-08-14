@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
@@ -72,6 +73,10 @@ public class Teacher implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "Teacher_Course", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private Set<Course> courses = new HashSet<>();
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "teacher")
+	private Set<StudentNote> notes = new HashSet<>();
 
 	public Teacher() {
 		// TODO Auto-generated constructor stub
@@ -157,6 +162,10 @@ public class Teacher implements Serializable {
 
 	public Set<Course> getCourses() {
 		return courses;
+	}
+
+	public Set<StudentNote> getNotes() {
+		return notes;
 	}
 
 	@Override

@@ -43,22 +43,28 @@ public class StudentNote implements Serializable {
 
 	@NotNull
 	private Double noteValue; // nota
-	
+
 	@NotNull
 	@ManyToOne
 	private SchoolQuarter quarter; // bimestre
+
+	@NotNull
+	@ManyToOne
+	private Teacher teacher; // Professor
 
 	public StudentNote() {
 
 	}
 
-	public StudentNote(Long id, Course course, Student student, Double noteValue, SchoolQuarter quarter) {
+	public StudentNote(Long id, Course course, Student student, Double noteValue, SchoolQuarter quarter,
+			Teacher teacher) {
 		super();
 		this.id = id;
 		this.course = course;
 		this.student = student;
 		this.noteValue = noteValue;
 		this.quarter = quarter;
+		this.teacher = teacher;
 	}
 
 	public Long getId() {
@@ -99,6 +105,14 @@ public class StudentNote implements Serializable {
 
 	public void setQuarter(SchoolQuarter quarter) {
 		this.quarter = quarter;
+	}
+
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
 	}
 
 	@Override
