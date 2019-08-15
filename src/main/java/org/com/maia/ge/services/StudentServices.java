@@ -2,10 +2,13 @@ package org.com.maia.ge.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.com.maia.ge.entity.SchoolQuarter;
 import org.com.maia.ge.entity.Student;
 import org.com.maia.ge.entity.StudentNote;
+import org.com.maia.ge.entity.dto.student.StudentDTO;
+import org.com.maia.ge.entity.dto.student.StudentNoteDTO;
 import org.com.maia.ge.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +18,6 @@ public class StudentServices {
 
 	@Autowired
 	private StudentRepository repository;
-
 
 	// save -- estudante, Serie, Semestre.
 	public Student save(Student obj) {
@@ -42,9 +44,10 @@ public class StudentServices {
 	}
 
 	// find notes by id student
-	public List<StudentNote> getNotesByStudentId(Long studentId) {
+	public Stream<StudentNoteDTO> getNotesByStudentId(Long studentId) {
 		List<StudentNote> result = repository.findByNote(studentId);
-		return result;
+		Stream<StudentNoteDTO> resultDTO = result.stream().map(x -> new StudentNoteDTO(x)); // função para armazenar o StudentNote em StudentNoteDTO
+		return resultDTO;
 	}
 
 	// find by email

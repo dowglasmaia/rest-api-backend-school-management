@@ -45,6 +45,7 @@ public class Course implements Serializable {
 	@ManyToMany(mappedBy = "courses")
 	private Set<SchoolGrade> grades = new HashSet<>();
 
+	@JsonIgnore
 	@ManyToMany(mappedBy = "courses")
 	private Set<Teacher> teachers = new HashSet<>();
 

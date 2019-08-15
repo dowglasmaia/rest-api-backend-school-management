@@ -30,8 +30,7 @@ public class StudentNote implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@JsonIgnore
+	
 	@NotNull
 	@ManyToOne
 	private Course course; // materia

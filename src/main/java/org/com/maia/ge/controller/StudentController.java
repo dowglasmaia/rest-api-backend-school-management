@@ -2,9 +2,12 @@ package org.com.maia.ge.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import org.com.maia.ge.entity.Student;
 import org.com.maia.ge.entity.StudentNote;
+import org.com.maia.ge.entity.dto.student.StudentNoteDTO;
 import org.com.maia.ge.services.StudentServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -49,10 +52,10 @@ public class StudentController {
 		return ResponseEntity.ok().body(result);
 	}
 
-	// find notas ***students/notes?studentid=1
+	// find notas ***ex.:http://localhost:8080/students/notes?studentId=1
 	@GetMapping("/notes")
-	public ResponseEntity<List<StudentNote>> getNotesOfStudents(@RequestParam(value = "studentId") Long studentId) {
-		List<StudentNote> result = services.getNotesByStudentId(studentId);
+	public ResponseEntity<Stream<StudentNoteDTO>> getNotesOfStudents(@RequestParam(value = "studentId") Long studentId) {
+		Stream<StudentNoteDTO> result = services.getNotesByStudentId(studentId);
 		return ResponseEntity.ok().body(result);
 
 	}
